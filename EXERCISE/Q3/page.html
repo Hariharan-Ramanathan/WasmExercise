@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var typedArray;
+    (async ()=>{
+    const img = await fetch('https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+    const buffer = await  img.arrayBuffer();
+    typedArray = new Uint8Array(buffer);
+    // console.log(typedArray);
+
+})()
+    var Module = {
+        onRuntimeInitialized:function(){    
+            const typedArrayPtr = Module._malloc(typedArray.length);
+            Module.HEAPU8.set(typedArray, typedArrayPtr);
+            Module.printArray(typedArrayPtr, typedArray.length);
+        }
+    }
+
+</script>
+<script src="code.js"></script>
+</html>
